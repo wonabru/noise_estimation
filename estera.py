@@ -61,14 +61,39 @@ def calc_noise_std(data: np.array):
 	return est_sig / 0.7 * _std, min_ret
 
 
+def henon_attractor(x, y, a=1.4, b=0.3):
+	'''
+	Computes the next step in the Henon
+	map for arguments x, y with kwargs a and
+	b as constants.
+	'''
+	x_next = 1 - a * x ** 2 + y
+	y_next = b * x
+	return x_next, y_next
+
+
 if __name__ == '__main__':
 
 	win_len = 400
 	est = []
+	level_of_noise = 0.1
 	for n in range(20):
 		data = np.random.randn(win_len)
-		est_noise, error = calc_noise_std(data)
-		print('Noise estimation', est_noise, 'error:', error)
+		# starting point
+		X = []
+		Y = []
+		x_next = 0
+		y_next = 0
+		# add points to array
+		for i in range(win_len):
+			x_next, y_next = henon_attractor(x_next, y_next)
+			X.append(x_next)
+			Y.append(y_next)
+		# Normalize X, data is just normalized
+		X = (np.array(X) - np.mean(X)) / np.std(X)
+		X = X + level_of_noise * data
+		est_noise, error = calc_noise_std(X)
+		print('Theoretical noise level:', level_of_noise, 'Noise estimated from data', est_noise, 'error:', error)
 		est.append(est_noise)
 
-	print('widnow length:', win_len, 'Avg. NTS:', np.mean(est), 'Error:', np.std(est))
+	print('Theoretical noise level:', level_of_noise, 'widnow length:', win_len, 'Avg. estimated NTS:', np.mean(est), 'Error:', np.std(est))
