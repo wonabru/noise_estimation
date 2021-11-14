@@ -14,7 +14,16 @@ Code for Noise Estimation for mixture of chaotic, noise and periodic motion.
 # Usage:
 
       Edit `Estera_lim.conf`
-      change `!NO_FILES!` to number of filename in `data_filenames.csv`
+      
+      Just change beginning 6 lines according to your needs:
+      
+        data_filenames.csv	#File name contains of file names with data (1 column starting from first raw)
+        4			#No of data files
+        0			#Number of lines to be ignored
+        3000			#Number of data
+        3000			#Size of the windows
+        500			#Shift of the windows
+      
       Edit `data_filenames.csv` and put in column all filenames which you would like to calculate noise
       Each file with data should have only one column of data.
       
