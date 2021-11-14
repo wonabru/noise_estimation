@@ -18,7 +18,7 @@ Code for Noise Estimation for mixture of chaotic, noise and periodic motion.
       Edit `data_filenames.csv` and put in column all filenames which you would like to calculate noise
       Each file with data should have only one column of data.
       
-      run `Estera_lim`
+      run `Estera`
       
 # Simplified version in python
 
