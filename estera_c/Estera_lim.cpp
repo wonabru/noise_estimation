@@ -567,9 +567,9 @@ void Fitting1()
 	    {
 	      eps1=getmaxdS();
 	      if(eps1==0)
-		repowereps(powereps*0.96);
+		     repowereps(powereps*0.96);
 	      if(powereps<0.3441717437358231)
-		break;
+		    break;
 	    }while(eps1==0);
           a[1]=eps1;
       }

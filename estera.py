@@ -74,10 +74,10 @@ def henon_attractor(x, y, a=1.4, b=0.3):
 
 if __name__ == '__main__':
 
-	win_len = 400
+	win_len = 1000
 	est = []
 	level_of_noise = 0.1
-	for n in range(20):
+	for n in range(10):
 		data = np.random.randn(win_len)
 		# starting point
 		X = []
@@ -89,11 +89,16 @@ if __name__ == '__main__':
 			x_next, y_next = henon_attractor(x_next, y_next)
 			X.append(x_next)
 			Y.append(y_next)
-		# Normalize X, data is just normalized
+		# Normalize X
 		X = (np.array(X) - np.mean(X)) / np.std(X)
+		data = (np.array(data) - np.mean(data)) / np.std(data)
+
+		# add noise
 		X = X + level_of_noise * data
+
+		# estimate noise
 		est_noise, error = calc_noise_std(X)
-		print('Theoretical noise level:', level_of_noise, 'Noise estimated from data', est_noise, 'error:', error)
+		print('Theoretical noise level:', np.std(level_of_noise * data), 'Noise estimated from data', est_noise, 'error:', error)
 		est.append(est_noise)
 
 	print('Theoretical noise level:', level_of_noise, 'widnow length:', win_len, 'Avg. estimated NTS:', np.mean(est), 'Error:', np.std(est))
